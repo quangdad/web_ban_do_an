@@ -93,6 +93,7 @@ export default function SideBar({ drawerWidth }) {
         position: "fixed",
         flexDirection: "column",
         // minHeight: "45vh",
+        bgcolor: "white",
       }}
     >
       <Typography variant="h6" fontWeight={600} align="center">

@@ -157,7 +157,7 @@ export default function InforUserPay() {
 
           <Box
             display={"flex"}
-            maxHeight={600}
+            maxHeight={400}
             overflow="auto"
             flexDirection="column"
             gap={2}

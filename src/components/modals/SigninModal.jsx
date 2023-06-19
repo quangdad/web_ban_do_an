@@ -74,6 +74,19 @@ export default function SigninModal() {
       dispatch(setSigninModal(false));
       setLoading(false);
     } catch (error) {
+      const { errors } = error.data;
+      errors.forEach((e) => {
+        switch (e.param) {
+          case "username":
+            setUsernameErrText(e.msg);
+            break;
+          case "password":
+            setPasswordErrText(e.msg);
+            break;
+          default:
+            break;
+        }
+      });
       Noti("error", error.data);
       setLoading(false);
     }

@@ -66,7 +66,7 @@ const HomePage = () => {
           </Typography>
           <Button
             variant={"contained"}
-            onClick={() => navigate("thuc-an-thuc-uong/thuc-an")}
+            onClick={() => navigate("do-an-do-uong/thuc-an")}
           >
             Xem tất cả
           </Button>
@@ -90,7 +90,7 @@ const HomePage = () => {
           <Button
             variant={"contained"}
             color={"warning"}
-            onClick={() => navigate("thuc-an-thuc-uong/thuc-uong")}
+            onClick={() => navigate("do-an-do-uong/thuc-uong")}
           >
             Xem tất cả
           </Button>

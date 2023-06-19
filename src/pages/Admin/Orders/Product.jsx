@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Avatar, Box, Button, Paper, Typography } from "@mui/material";
 import { currentFormat } from "../../../components/common/FormatCurrency";
 import _ from "lodash";
 import orderApi from "../../../api/orderApi";
 import { LoadingButton } from "@mui/lab";
-import { useState } from "react";
 import Noti from "../../../components/common/Toast";
 
 const statusProduct = [
@@ -31,11 +30,13 @@ const statusProduct = [
 ];
 
 const Product = ({ products, loading, setLoading }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const sumPrice = () =>
     _.sumBy(products.products, (e) => Number(e.price) * Number(e.prdCount));
 
   const handleAccept = async (e) => {
-    setLoading(true);
+    e.preventDefault();
+    setIsLoading(true);
     try {
       await orderApi.updateOrder({
         id: products.prdID,
@@ -46,11 +47,13 @@ const Product = ({ products, loading, setLoading }) => {
       setLoading(false);
     } catch (error) {
       Noti("error", error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleCancel = async () => {
-    setLoading(true);
+    setIsLoading(true);
     try {
       await orderApi.updateOrder({
         id: products.prdID,
@@ -61,6 +64,8 @@ const Product = ({ products, loading, setLoading }) => {
       setLoading(false);
     } catch (error) {
       Noti("error", error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -73,6 +78,7 @@ const Product = ({ products, loading, setLoading }) => {
           border: `1px solid ${products.status === "dahuy" ? "red" : "black"}`,
         }}
       >
+        <Box></Box>
         <Box
           sx={{
             height: 220,
@@ -114,7 +120,6 @@ const Product = ({ products, loading, setLoading }) => {
             </Box>
           ))}
         </Box>
-
         <Box display="flex" flexDirection={"column"}>
           <Box
             display={"flex"}
@@ -130,7 +135,6 @@ const Product = ({ products, loading, setLoading }) => {
             </Typography>
           </Box>
         </Box>
-
         <Box display="flex" flexDirection={"column"} gap={2}>
           {products.status === "danggiao" ? (
             <Button disabled variant="contained" fullWidth color="success">
@@ -141,7 +145,7 @@ const Product = ({ products, loading, setLoading }) => {
               variant="contained"
               fullWidth
               color="success"
-              loading={loading}
+              loading={isLoading}
               onClick={handleAccept}
               disabled={products.status === "dahuy"}
             >

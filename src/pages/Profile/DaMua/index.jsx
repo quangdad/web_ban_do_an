@@ -1,5 +1,13 @@
 import React from "react";
-import { Avatar, Box, Button, Link, Paper, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  LinearProgress,
+  Link,
+  Paper,
+  Typography,
+} from "@mui/material";
 import { useEffect } from "react";
 import orderApi from "../../../api/orderApi";
 import { useState } from "react";
@@ -44,7 +52,6 @@ const Product = ({ products, phone, orders }) => {
       }
     });
   }, [products, statusProduct, loading]);
-  console.log(orders);
   const handleDone = async (e) => {
     setLoading(true);
     try {
@@ -157,30 +164,36 @@ const Product = ({ products, phone, orders }) => {
 
 const DaMua = () => {
   const [orders, setOrders] = useState([]);
-  const user = useSelector((state) => state.user.data);
+  const [isLoading, setIsLoading] = useState(true);
+  const uid = localStorage.getItem("UID");
 
   useEffect(() => {
     const getOrders = async () => {
-      const userOder = await orderApi.getOrderByUID({ id: user.id });
+      const userOder = await orderApi.getOrderByUID({ id: uid });
+      setIsLoading(false);
       setOrders(userOder);
     };
     getOrders();
-  }, [user.id]);
+  }, [uid]);
 
-  return orders.data?.length > 0 ? (
+  console.log(orders);
+
+  return isLoading ? (
+    <LinearProgress />
+  ) : orders?.length > 0 ? (
     <Box display="flex" flexDirection={"row"} gap={2} p={3} flexWrap={"wrap"}>
-      {orders.data[0].cart.map((product, i) => (
+      {orders[0].cart.map((product, i) => (
         <Product
           products={product}
-          phone={orders.data[0].phone}
-          orders={orders.data[0]}
+          phone={orders[0].phone}
+          orders={orders[0]}
           key={i}
         />
       ))}
     </Box>
   ) : (
     <Typography variant="h4" align="center" sx={{ mt: 3 }}>
-      Chưa có đơn hàng <Link href="/thuc-an-thuc-uong">Thêm ngay</Link>
+      Chưa có đơn hàng <Link href="/do-an-do-uong">Thêm ngay</Link>
     </Typography>
   );
 };

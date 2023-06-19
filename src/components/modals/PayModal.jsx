@@ -196,7 +196,7 @@ export default function PayModal() {
           {products.length > 0 ? (
             <Box
               display={"flex"}
-              maxHeight={500}
+              maxHeight={400}
               overflow="auto"
               flexDirection="column"
               gap={2}
@@ -264,7 +264,7 @@ export default function PayModal() {
             display={"flex"}
             flexDirection="row"
             justifyContent={"space-between"}
-            p={4}
+            // p={2}
             alignItems="center"
           >
             <Typography fontWeight={600} variant="h4">

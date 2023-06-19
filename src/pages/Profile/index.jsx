@@ -2,7 +2,6 @@ import { LoadingButton } from "@mui/lab";
 import { Avatar, Box, Button, Paper, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import axiosClient from "../../api/axiosClient";
 import { setUser } from "../../redux/reducers/userReducer";
 import Noti from "../../components/common/Toast";
 import FileBase64 from "react-file-base64";
