@@ -3,10 +3,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setAddProductModal,
-  setEditProductModal,
-} from "../../redux/reducers/modalReducer";
+import { setEditProductModal } from "../../redux/reducers/modalReducer";
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
 import moment from "moment";
@@ -43,7 +40,6 @@ export default function EditProductModal() {
   const [priceErr, setPriceErr] = useState("");
   const [hsxErr, setHsxErr] = useState("");
   const [hsdErr, setHsdErr] = useState("");
-  const [typeErr, setTypeErr] = useState("");
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const [image, setImage] = useState("");
@@ -97,8 +93,9 @@ export default function EditProductModal() {
     setPriceErr("");
   };
 
-  const handleSelectImage = (e) => {
-    setImage(imageUpload(e.base64));
+  const handleSelectImage = async (e) => {
+    const img = await imageUpload(e.base64);
+    setImage(img);
   };
 
   const handleChange = (event) => {
@@ -129,7 +126,6 @@ export default function EditProductModal() {
       hsd: formData.get("hsd"),
     };
 
-    console.log(data);
     let err = false;
     if (data.name === "") {
       setNameErr("Bạn chưa nhập tên");
