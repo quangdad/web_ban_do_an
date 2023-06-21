@@ -7,6 +7,8 @@ import { setLoadingR } from "../../redux/reducers/loadingReducer";
 import { Box } from "@mui/material";
 import SideBar from "../common/Sidebar";
 
+const dl = require("../../access/imgs/dl.jpg");
+
 const AuthLayout = () => {
   const [loading, setLoading] = useState(false);
   const UID = localStorage.getItem("UID");
@@ -44,7 +46,7 @@ const AuthLayout = () => {
         <SideBar drawerWidth={drawerWidth} />
         <Box
           flexGrow={1}
-          sx={{ minHeight: "calc(100vh - 60px)" }}
+          sx={{ minHeight: "calc(100vh - 60px)", background: `url(${dl})` }}
           pl={drawerWidth}
         >
           <Outlet />

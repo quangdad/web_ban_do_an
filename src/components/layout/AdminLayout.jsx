@@ -5,19 +5,11 @@ import { Outlet } from "react-router-dom";
 import UserAdminModal from "../modals/UserAdminModal";
 
 const AdminLayout = () => {
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    const checkAdmin = async () => {
-      // const isAdmin = await;
-    };
-  });
   return (
-    loading && (
-      <Box>
-        <Outlet />
-        <UserAdminModal />
-      </Box>
-    )
+    <Box>
+      <Outlet />
+      <UserAdminModal />
+    </Box>
   );
 };
 

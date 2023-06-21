@@ -25,22 +25,17 @@ const Order = () => {
     const getOrders = async () => {
       setIsLoading(true);
       const userOrder = await orderApi.getOrders();
-      const productsCart = userOrder.flatMap((order) => order.cart);
-      console.log(userOrder);
+      const productsCart = userOrder.flatMap((order) => {
+        const { cart } = order;
+        const updatedCart = cart.map((item) => ({
+          ...item,
+          phone: order.phone,
+          UID: order.UID,
+          prdID: order._id,
+        }));
+        return updatedCart;
+      });
       setProductsCart(productsCart);
-      // dispatch(
-      //   setOrderReducer(
-      //     e.map(
-      //       (v) =>
-      //         (v = {
-      //           ...v,
-      //           UID: _.find(userOrder, e.id).UID,
-      //           prdID: _.find(userOrder, e.id)._id,
-      //           phone: _.find(userOrder, e.id).phone,
-      //         })
-      //     )
-      //   )
-      // )
     };
     dispatch(setOrderReducer(products));
 

@@ -244,7 +244,7 @@ export default function User() {
         selected.slice(selectedIndex + 1)
       );
     }
-    setIdSelected(row.id);
+    setIdSelected(row._id);
     setSelected(newSelected);
   };
 
@@ -402,7 +402,7 @@ export default function User() {
                           scope="row"
                           padding="none"
                         >
-                          {row.id}
+                          {row._id}
                         </TableCell>
                         <TableCell align="right">{row.fullname}</TableCell>
                         <TableCell align="right">{row.username}</TableCell>

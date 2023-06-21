@@ -36,6 +36,7 @@ const Product = ({ products, loading, setLoading }) => {
 
   const handleAccept = async (e) => {
     e.preventDefault();
+    setLoading(true);
     setIsLoading(true);
     try {
       await orderApi.updateOrder({
@@ -44,7 +45,6 @@ const Product = ({ products, loading, setLoading }) => {
         status: "danggiao",
       });
       Noti("success", "Đã xác nhận đơn hàng");
-      setLoading(false);
     } catch (error) {
       Noti("error", error.message);
     } finally {
@@ -54,6 +54,7 @@ const Product = ({ products, loading, setLoading }) => {
 
   const handleCancel = async () => {
     setIsLoading(true);
+    setLoading(true);
     try {
       await orderApi.updateOrder({
         id: products.prdID,
@@ -61,7 +62,6 @@ const Product = ({ products, loading, setLoading }) => {
         status: "dahuy",
       });
       Noti("success", "Đã hủy đơn hàng");
-      setLoading(false);
     } catch (error) {
       Noti("error", error.message);
     } finally {

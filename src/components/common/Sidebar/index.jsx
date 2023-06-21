@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { useLocation, useNavigate } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
@@ -92,20 +91,20 @@ export default function SideBar({ drawerWidth }) {
         width: drawerWidth,
         position: "fixed",
         flexDirection: "column",
-        // minHeight: "45vh",
+        minHeight: "100vh",
         bgcolor: "white",
       }}
     >
       <Typography variant="h6" fontWeight={600} align="center">
         Chào {user.fullname}
       </Typography>
-      <MenuList>
+      <MenuList disablePadding>
         {headerData.map(
           (e, i) =>
             e.display && (
               <MenuItem
                 key={i}
-                sx={path === e.path && { bgcolor: "rgba(0,0,0,.05)" }}
+                sx={{ p: 2, bgcolor: path === e.path && "rgba(0,0,0,.05)" }}
                 onClick={() => {
                   navigate(e.path);
                 }}
