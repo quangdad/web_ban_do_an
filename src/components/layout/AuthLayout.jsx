@@ -46,7 +46,7 @@ const AuthLayout = () => {
         <SideBar drawerWidth={drawerWidth} />
         <Box
           flexGrow={1}
-          sx={{ minHeight: "calc(100vh - 60px)", background: `url(${dl})` }}
+          sx={{ minHeight: "calc(100vh - 60px)" }}
           pl={drawerWidth}
         >
           <Outlet />
