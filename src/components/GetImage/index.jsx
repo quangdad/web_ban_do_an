@@ -16,7 +16,6 @@ const GetImage = () => {
   const myImage = cld.image(img);
 
   myImage.resize(fill().width(250).height(250));
-  console.log(myImage);
   return (
     <div className="App-body">
       <h1>React Quick Start</h1>

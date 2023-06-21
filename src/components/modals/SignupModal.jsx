@@ -111,7 +111,6 @@ export default function SignupModal() {
       setLoading(false);
       Noti("success", "Đăng kí thành công");
     } catch (error) {
-      console.log(err);
       Noti("error", error.data);
       setLoading(false);
     }

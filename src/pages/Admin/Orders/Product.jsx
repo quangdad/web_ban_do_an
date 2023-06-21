@@ -1,36 +1,40 @@
 import React, { useState } from "react";
-import { Avatar, Box, Button, Paper, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  CircularProgress,
+  Paper,
+  Typography,
+} from "@mui/material";
 import { currentFormat } from "../../../components/common/FormatCurrency";
 import _ from "lodash";
 import orderApi from "../../../api/orderApi";
 import { LoadingButton } from "@mui/lab";
 import Noti from "../../../components/common/Toast";
-
-const statusProduct = [
-  {
-    text: "Đang giao hàng",
-    Noti: "secondary",
-    status: "danggiaohang",
-  },
-  {
-    text: "Hoàn thành",
-    Noti: "success",
-    status: "hoanthanh",
-  },
-  {
-    text: "Chờ xác nhận",
-    Noti: "warning",
-    status: "choxacnhan",
-  },
-  {
-    text: "Đã hủy",
-    Noti: "error",
-    status: "dahuy",
-  },
-];
+import { useEffect } from "react";
+import userApi from "../../../api/userApi";
 
 const Product = ({ products, loading, setLoading }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [userOrder, setuserOrder] = useState(null);
+  const [getUserLoading, setGetUserLoading] = useState(false);
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      try {
+        setGetUserLoading(true);
+        const data = await userApi.getUser(products.UID);
+        setuserOrder(data);
+      } catch (error) {
+        throw error;
+      } finally {
+        setGetUserLoading(false);
+      }
+    };
+    getUserInfo();
+  }, [products.UID]);
+
   const sumPrice = () =>
     _.sumBy(products.products, (e) => Number(e.price) * Number(e.prdCount));
 
@@ -78,7 +82,31 @@ const Product = ({ products, loading, setLoading }) => {
           border: `1px solid ${products.status === "dahuy" ? "red" : "black"}`,
         }}
       >
-        <Box></Box>
+        {getUserLoading ? (
+          <CircularProgress />
+        ) : (
+          <Box>
+            <Typography>
+              Fullname:{" "}
+              <b>
+                <i>{userOrder?.fullname}</i>
+              </b>{" "}
+            </Typography>
+            <Typography>
+              Phone:{" "}
+              <b>
+                <i>{userOrder?.phone}</i>
+              </b>{" "}
+            </Typography>
+            <Typography>
+              Address:{" "}
+              <b>
+                <i>{userOrder?.address}</i>
+              </b>{" "}
+            </Typography>
+            <hr />
+          </Box>
+        )}
         <Box
           sx={{
             height: 220,

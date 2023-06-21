@@ -176,8 +176,6 @@ const DaMua = () => {
     getOrders();
   }, [uid]);
 
-  console.log(orders);
-
   return isLoading ? (
     <LinearProgress />
   ) : orders?.length > 0 ? (

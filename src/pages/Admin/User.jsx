@@ -347,8 +347,6 @@ export default function User() {
     numSelected: PropTypes.number.isRequired,
   };
 
-  console.log(rows);
-
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
