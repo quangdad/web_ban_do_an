@@ -1,5 +1,4 @@
 import axios from "axios";
-import queryString from "query-string";
 
 // const baseURL = "http://localhost:9000/api/";
 const baseURL = "https://be-ban-do-an2.onrender.com/api/";
