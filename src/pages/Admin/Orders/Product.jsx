@@ -52,6 +52,7 @@ const Product = ({ products, loading, setLoading }) => {
     } catch (error) {
       Noti("error", error.message);
     } finally {
+      setLoading(false);
       setIsLoading(false);
     }
   };
@@ -69,6 +70,7 @@ const Product = ({ products, loading, setLoading }) => {
     } catch (error) {
       Noti("error", error.message);
     } finally {
+      setLoading(false);
       setIsLoading(false);
     }
   };

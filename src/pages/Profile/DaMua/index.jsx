@@ -3,22 +3,24 @@ import {
   Avatar,
   Box,
   Button,
+  FormControl,
+  InputLabel,
   LinearProgress,
   Link,
+  MenuItem,
   Paper,
+  Select,
   Typography,
 } from "@mui/material";
 import { useEffect } from "react";
 import orderApi from "../../../api/orderApi";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { currentFormat } from "../../../components/common/FormatCurrency";
 import _ from "lodash";
 import Noti from "../../../components/common/Toast";
 
-const Product = ({ products, phone, orders }) => {
+const Product = ({ products, phone, orders, loading, setLoading }) => {
   const [status, setStatus] = useState({});
-  const [loading, setLoading] = useState(false);
   const sumPrice = () =>
     _.sumBy(products.products, (e) => Number(e.price) * Number(e.prdCount));
 
@@ -31,7 +33,7 @@ const Product = ({ products, phone, orders }) => {
     {
       text: "Hoàn thành",
       Noti: "success",
-      status: "hoanthanh",
+      status: "hoantat",
     },
     {
       text: "Chờ xác nhận",
@@ -51,19 +53,21 @@ const Product = ({ products, phone, orders }) => {
         setStatus(statusProduct[i]);
       }
     });
-  }, [products, statusProduct, loading]);
+  }, [products, loading]);
+
   const handleDone = async (e) => {
     setLoading(true);
     try {
-      // await orderApi.updateOrder({
-      //   id: orders._id,
-      //   cartId: orders.cart._id,
-      //   status: "hoantat",
-      // });
+      await orderApi.updateOrder({
+        id: orders._id,
+        cartId: products._id,
+        status: "hoantat",
+      });
       Noti("success", "Đã xác nhận đơn hàng");
-      setLoading(false);
     } catch (error) {
       Noti("error", error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -165,6 +169,8 @@ const Product = ({ products, phone, orders }) => {
 const DaMua = () => {
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState("choxacnhan");
   const uid = localStorage.getItem("UID");
 
   useEffect(() => {
@@ -174,20 +180,43 @@ const DaMua = () => {
       setOrders(userOder);
     };
     getOrders();
-  }, [uid]);
+  }, [uid, loading]);
+
+  const handleChange = (e) => {
+    setStatus(e.target.value);
+  };
 
   return isLoading ? (
     <LinearProgress />
   ) : orders?.length > 0 ? (
     <Box display="flex" flexDirection={"row"} gap={2} p={3} flexWrap={"wrap"}>
-      {orders[0].cart.map((product, i) => (
-        <Product
-          products={product}
-          phone={orders[0].phone}
-          orders={orders[0]}
-          key={i}
-        />
-      ))}
+      <FormControl sx={{ width: 160, right: 0, m: 3, position: "absolute" }}>
+        <InputLabel id="demo-simple-select-label">Status</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={status}
+          label="Status"
+          onChange={handleChange}
+        >
+          <MenuItem value={"choxacnhan"}>Chờ xác nhận</MenuItem>
+          <MenuItem value={"danggiao"}>Đang giao</MenuItem>
+          <MenuItem value={"hoantat"}>Hoàn tất</MenuItem>
+          <MenuItem value={"dahuy"}>Đã hủy</MenuItem>
+        </Select>
+      </FormControl>
+      {orders[0].cart
+        .filter((p) => p.status === status)
+        .map((product, i) => (
+          <Product
+            products={product}
+            phone={orders[0].phone}
+            orders={orders[0]}
+            key={i}
+            loading={loading}
+            setLoading={setLoading}
+          />
+        ))}
     </Box>
   ) : (
     <Typography variant="h4" align="center" sx={{ mt: 3 }}>
