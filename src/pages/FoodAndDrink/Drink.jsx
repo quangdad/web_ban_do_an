@@ -1,4 +1,4 @@
-import { Box, LinearProgress } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -28,7 +28,7 @@ const Drink = () => {
   }, [productsData]);
 
   return loading ? (
-    <LinearProgress />
+    <CircularProgress />
   ) : (
     <Box minHeight={"100vh"}>
       {products && <Tabsbar header={1} products={products} />}

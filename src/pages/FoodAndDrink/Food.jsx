@@ -1,4 +1,4 @@
-import { Box, LinearProgress } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import Tabsbar from "../../components/Tabs";
@@ -27,7 +27,7 @@ const Food = () => {
   }, [productsData]);
 
   return isLoading ? (
-    <LinearProgress />
+    <CircularProgress />
   ) : (
     <Box minHeight={"100vh"}>
       {products && <Tabsbar header={0} products={products} />}
